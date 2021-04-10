@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tuto Meteo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="utf-8" \>
+    <title>Météo</title>
+    <link rel="icon" type="image/ico" href="https://www.terre-net.fr/Content/Images/Meteo/picto-svg/3.svg"/>
+  </head>
+  <body>
+    <p id = "explique">Vous voulez la météo de quelle ville? (city, country ex: Paris, fr)</p>
+    <input type="text" id = "city"/>
+    <input type="button" value="Chercher" id ="bouton" onclick="buttonClickGET()"  />
+    <p id="zone_meteo">Waiting input</p>
+    <style>
+        body {
+            font-weight: bolder;
+            text-align: center;
+            overflow: hidden;
+            background: #000000;
+		}
+        #explique {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            color: rgb(46, 178, 196);
+            text-align: center;
+            font-size: 30px;
+            padding-top: 100px;
+        }
+        #city {
+            height: 30px;
+            width: 300px;
+        }
+        #bouton {
+            height: 40px;
+        }
+        #zone_meteo {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-align: center;
+            color:red;
+            font-size: 30px;
+        }
+    </style>
+    <script>
+        // let city = prompt("Vous voulez la météo de quelle ville? (city, country ex: Paris, fr) ");
+        function getLocaltime(){
+            return new Date().toLocaleTimeString();
+        }
+        function buttonClickGET() {
+            let ville = document.getElementById("city").value;
+            var url = `https://api.openweathermap.org/data/2.5/weather?q=${ville}&appid=c21a75b667d6f7abb81f118dcf8d4611&units=metric`
+
+            $.get(url, callBackGetSuccess).done(function() {
+                //alert( "second success" );
+            })
+            .fail(function() {
+                alert( "error" );
+            })
+            .always(function() {
+                //alert( "finished" );
+            });
+        }
+        var callBackGetSuccess = function(data) {
+            let celsius = Math.floor(data.main.temp)
+            var element = document.getElementById("zone_meteo");
+            element.innerHTML = "La temperature est de " + celsius + " °C <br> Il est " + getLocaltime();
+        }
+    </script>
+  </body>
+</html>
