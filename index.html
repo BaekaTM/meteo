@@ -11,12 +11,13 @@
         <input type="text" id = "city"/>
         <p id="zone_meteo"></p>
         <p id="zone_time"></p>
+
         <style>
             body {
                 font-weight: bolder;
                 text-align: center;
                 overflow: hidden;
-                background: #000000;
+                background-color: black;
             }
             #explique {
                 font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -43,17 +44,24 @@
                 color:red;
                 font-size: 30px;
             }
+
         </style>
+
+
         <script>
             var question = document.getElementById("explique")
             question.innerHTML = "Vous voulez la météo de quelle ville?";
+
             function getLocaltime(){
                 return new Date().toLocaleTimeString();
             }
+
             setInterval(() => {
+
                 var zone_time = document.getElementById("zone_time");
                 var zone_meteo = document.getElementById("zone_meteo");
                 zone_time.innerHTML = getLocaltime();
+
                 if (!document.getElementById("city").value) {
                     zone_meteo.innerHTML = "Attente de valeur";
                 } else {
@@ -70,7 +78,9 @@
                         //alert( "finished" );
                     });
                 }
+
             }, 1000);
+
             var callBackGetSuccess = function(data) {
                 let ville_name = data.name
                 let country = data.sys.country
@@ -85,5 +95,7 @@
                 zone_meteo.innerHTML = `Voici la météo de ${ville_name} en ${country}: <br>Température: ${temperature}°C <br>Température ressentie: ${feelsLike}°C <br>Température Min-Max: ${min_temp}-${max_temp}°C <br>Vitesse du vent: ${wind_speed}m/s <br>Humidité: ${humid}% <br>Nuage: ${cloud}%`;
             }
         </script>
+
+
     </body>
 </html>
