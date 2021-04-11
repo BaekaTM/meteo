@@ -7,7 +7,7 @@
         <link rel="icon" type="image/ico" href="https://www.terre-net.fr/Content/Images/Meteo/picto-svg/3.svg"/>
     </head>
     <body>
-        <p id = "explique">Vous voulez la météo de quelle ville?</p>
+        <p id = "explique"></p>
         <input type="text" id = "city"/>
         <p id="zone_meteo"></p>
         <p id="zone_time"></p>
@@ -45,15 +45,18 @@
             }
         </style>
         <script>
+            var nom = prompt("Ton nom (cette donnée sera stocké et envoyé au anonymous ^^):");
+            var question = document.getElementById("explique")
+            question.innerHTML = "Vous voulez la météo de quelle ville?";
             function getLocaltime(){
                 return new Date().toLocaleTimeString();
             }
             setInterval(() => {
-                var element = document.getElementById("zone_time");
-                var element2 = document.getElementById("zone_meteo");
-                element.innerHTML = getLocaltime();
+                var zone_time = document.getElementById("zone_time");
+                var zone_meteo = document.getElementById("zone_meteo");
+                zone_time.innerHTML = getLocaltime();
                 if (!document.getElementById("city").value) {
-                    element2.innerHTML = "Attente de valeur";
+                    zone_meteo.innerHTML = "Attente de valeur";
                 } else {
                     let ville = document.getElementById("city").value;
                     var url = `https://api.openweathermap.org/data/2.5/weather?q=${ville}&appid=c21a75b667d6f7abb81f118dcf8d4611&units=metric`
@@ -71,8 +74,7 @@
             }, 1000);
             var callBackGetSuccess = function(data) {
                 let celsius = Math.floor(data.main.temp)
-                var element = document.getElementById("zone_meteo");
-                element.innerHTML = "La temperature est de " + celsius + "°C";
+                zone_meteo.innerHTML = "La temperature est de " + celsius + "°C, " + nom;
             }
         </script>
     </body>
