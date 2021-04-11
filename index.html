@@ -74,7 +74,8 @@
             }, 1000);
             var callBackGetSuccess = function(data) {
                 let celsius = Math.floor(data.main.temp)
-                zone_meteo.innerHTML = "La temperature est de " + celsius + "°C, " + nom;
+                if (nom === 'null') zone_meteo.innerHTML = "La temperature est de " + celsius + "°C";
+                else zone_meteo.innerHTML = "La temperature est de " + celsius + "°C, " + nom;
             }
         </script>
     </body>
